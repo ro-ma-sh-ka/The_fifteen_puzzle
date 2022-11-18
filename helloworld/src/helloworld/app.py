@@ -14,6 +14,7 @@ class HelloWorld(toga.App):
             'Your name: ',
             style=Pack(padding=(0, 5))
         )
+
         self.name_input = toga.TextInput(style=Pack(flex=1))
 
         name_box = toga.Box(style=Pack(direction=ROW, padding=5))

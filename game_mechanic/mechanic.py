@@ -1,4 +1,6 @@
+import time
 from random import randint
+from time import perf_counter, monotonic
 
 
 class List15:
@@ -68,3 +70,43 @@ class List15:
             move_to = randint(1, 5)
             self.movement(list15, 2)
         return list15
+
+
+class Timer:
+    def __init__(self):
+        self.start_time = None
+        self.counter_time = None
+
+    def start_timer(self):
+        if self.start_time is not None:
+            print('Timer works')
+        self.start_time = perf_counter()
+
+    def diff_timer(self):
+        self.counter_time = perf_counter() - self.start_time
+        print(f'Timer: {self.counter_time}')
+
+    def __enter__(self):
+        self.start_timer()
+
+    def __exit__(self, *kwargs):
+        self.diff_timer()
+
+
+def the_game():
+    print("Let's start:")
+    mixed_field = List15().mixer()
+    print(*mixed_field, sep='\n')
+    sample = List15().new_list()
+    counter = 0
+
+    with Timer():
+        while sample != mixed_field:
+            print(f"Movements: {counter}")
+            move_to = int(
+                input('Choose zero to move: 1 - zero to up, 2 - zero to down, 3 - zero to right, 4 - zero to left: '))
+            mixed_field = List15().movement(mixed_field, move_to)
+            print(*mixed_field, sep='\n')
+            counter += 1
+
+        return print(f"Congratulations! You've done it after {counter} movements!")
